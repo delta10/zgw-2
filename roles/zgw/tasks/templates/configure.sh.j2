@@ -52,7 +52,7 @@ echo "Configure notification service on all the services"
 for service in zrc ztc drc brc nrc ac
 do
     echo "gemma-$service"
-    docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.notifications.models import NotificationsConfig; config = NotificationsConfig.objects.first(); config.api_root = \"http://gemma-nrc.{{ host_suffix }}/api/v1/\"; config.save()' | python src/manage.py shell"
+    docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.notifications.models import NotificationsConfig; NotificationsConfig.objects.update_or_create(id=1, defaults={\"api_root\": \"http://gemma-nrc.{{ host_suffix }}/api/v1/\"})' | python src/manage.py shell"
 done
 
 echo "Add some configuration to the demo application"
