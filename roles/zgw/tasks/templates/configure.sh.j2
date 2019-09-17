@@ -1,0 +1,67 @@
+#!/bin/bash
+read -p "Are you sure you want to configure your ZGW components? (only run this command once) <y/N> " prompt
+if [[ $prompt != "y" && $prompt != "Y" && $prompt != "yes" && $prompt != "Yes" ]]
+then
+  exit 0
+fi
+
+echo "Creating superadmin accounts on all services"
+for service in zrc ztc drc brc nrc ac zaken-demo
+do
+    docker-compose exec gemma-$service python src/manage.py createsuperuser --username {{ admin_username }} --email {{ admin_email }}
+done
+
+echo "Let the services announce the correct domains"
+for service in zrc ztc drc brc ac
+do
+    echo "gemma-$service"
+    docker-compose exec gemma-$service sh -c "echo 'from django.contrib.sites.models import Site; site = Site.objects.first(); site.name = \"gemma-$service.{{ host_suffix }}\"; site.domain = \"gemma-$service.{{ host_suffix }}\"; site.save()' | python src/manage.py shell"
+done
+
+echo "Creating gemma account on the services and linking them to the autorisation component"
+for service in zrc ztc drc brc nrc ac zaken-demo
+do
+    echo "gemma-$service"
+    docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.models import JWTSecret; JWTSecret.objects.update_or_create(id=1, defaults={\"identifier\": \"gemma\", \"secret\": \"{{ client_secret }}\"})' | python src/manage.py shell"
+
+    if [ $service != "zaken-demo" ]
+    then
+        docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.authorizations.models import AuthorizationsConfig; AuthorizationsConfig.objects.update_or_create(id=1, defaults={\"api_root\": \"http://gemma-ac.{{ host_suffix }}/api/v1/\", \"component\": \"$service\"})' | python src/manage.py shell"
+    fi
+done
+
+echo "Configure authorizations for the gemma client on all services"
+docker-compose exec gemma-ac sh -c "echo 'from vng_api_common.authorizations.models import Applicatie; Applicatie.objects.update_or_create(id=1, defaults={\"client_ids\": [\"gemma\"], \"label\": \"gemma\", \"heeft_alle_autorisaties\": True})' | python src/manage.py shell"
+
+echo "Configure credentials on all the services"
+for service in zrc ztc drc brc nrc ac zaken-demo
+do
+    echo "gemma-$service"
+    i=1
+    for to_service in zrc ztc drc brc nrc ac zaken-demo
+    do
+        if [ $service != $to_service ]
+        then
+            docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.models import APICredential; APICredential.objects.update_or_create(id=$i, defaults={\"api_root\": \"http://gemma-$to_service.{{ host_suffix }}/api/v1/\", \"label\": \"gemma-$to_service\", \"client_id\": \"gemma\", \"secret\": \"{{ client_secret }}\", \"user_id\": \"gemma\", \"user_representation\": \"gemma\"})' | python src/manage.py shell"
+            ((i++))
+        fi
+    done
+done
+
+echo "Configure notification service on all the services"
+for service in zrc ztc drc brc nrc ac
+do
+    echo "gemma-$service"
+    docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.notifications.models import NotificationsConfig; config = NotificationsConfig.objects.first(); config.api_root = \"http://gemma-nrc.{{ host_suffix }}/api/v1/\"; config.save()' | python src/manage.py shell"
+done
+
+echo "Add some configuration to the demo application"
+docker-compose exec gemma-zaken-demo sh -c "echo 'from zac.demo.models import SiteConfiguration; config = SiteConfiguration.objects.first(); config.global_api_client_id = \"gemma\"; config.global_api_secret = \"{{ client_secret }}\"; config.google_maps_api_key = \"{{ google_maps_api_key }}\"; config.ztc_catalogus_uuid = \"f7afd156-c8f5-4666-b8b5-28a4a9b5dfc7\"; config.zrc_base_url = \"http://gemma-zrc.{{ host_suffix }}/api/v1/\"; config.drc_base_url = \"http://gemma-drc.{{ host_suffix }}/api/v1/\"; config.ztc_base_url = \"http://gemma-ztc.{{ host_suffix }}/api/v1/\"; config.brc_base_url = \"http://gemma-brc.{{ host_suffix }}/api/v1/\"; config.nc_base_url = \"http://gemma-nrc.{{ host_suffix }}/api/v1/\"; config.ztc_mor_zaaktype_uuid = \"0119dd4e-7be9-477e-bccf-75023b1453c1\"; config.ztc_mor_statustype_new_uuid = \"e53becac-cb4f-4dc7-911b-7d2ca066c041\"; config.ztc_mor_informatieobjecttype_image_uuid = \"63a58060-8cd1-4c9d-bcc4-b6954353e758\"; config.save()' | python src/manage.py shell"
+
+echo "Load some demo-data for gemma-ztc"
+docker-compose exec gemma-ztc sh -c "wget https://catalogi-api.vng.cloud/data/fixture/ -O /tmp/fixture.json && python /app/src/manage.py loaddata /tmp/fixture.json && rm /tmp/fixture.json"
+
+echo "Register notification channels"
+docker-compose exec gemma-zrc src/manage.py register_kanaal
+docker-compose exec gemma-drc src/manage.py register_kanaal
+docker-compose exec gemma-ac src/manage.py register_kanaal

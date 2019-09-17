@@ -1,0 +1,14 @@
+version: 1.0.0-rc1
+host_suffix: zgw.test
+
+postgis_password: postgis1
+rabbitmq_password: guest1
+
+client_secret: gemma123
+
+secret_key: pleasechangemetosomethingsecret
+
+admin_username: admin
+admin_email: admin@admin.com
+
+google_maps_api_key: "AIzaSyDCYXCpV1m_wQoiPbR7E9f5dpa1iWilsjc"

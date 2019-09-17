@@ -1,0 +1,5 @@
+- name: Apply zgw role to all hosts
+  hosts: all
+  roles:
+  - docker
+  - zgw

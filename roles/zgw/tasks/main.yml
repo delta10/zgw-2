@@ -1,0 +1,56 @@
+- name: create /home/zgw folder
+  file:
+    path: /home/zgw
+    state: directory
+
+- name: Create /home/zgw/nginx-default.conf
+  template:
+    src: templates/nginx-default.conf.j2
+    dest: /home/zgw/nginx-default.conf
+    owner: root
+    mode: 0600
+  notify: restart zgw
+
+- name: Create /home/zgw/postgis-initdb.sql
+  template:
+    src: templates/postgis-initdb.sql.j2
+    dest: /home/zgw/postgis-initdb.sql
+    owner: root
+    mode: 0644
+  notify: restart zgw
+
+- name: Create /home/zgw/docker-compose.yml
+  template:
+    src: templates/docker-compose.yml.j2
+    dest: /home/zgw/docker-compose.yml
+    owner: root
+    mode: 0600
+  notify: restart zgw
+
+- name: Create /home/zgw/.env
+  template:
+    src: templates/dot-env.j2
+    dest: /home/zgw/.env
+    owner: root
+    mode: 0600
+  notify: restart zgw
+
+- name: Create /home/zgw/configure.sh
+  template:
+    src: templates/configure.sh.j2
+    dest: /home/zgw/configure.sh
+    owner: root
+    mode: 0744
+
+- name: Create /etc/systemd/system/zgw.service
+  template:
+    src: templates/zgw.service.j2
+    dest: /etc/systemd/system/zgw.service
+    owner: root
+    mode: 0644
+  notify: restart zgw
+
+- name: enable zgw service
+  systemd:
+    name: zgw
+    enabled: yes

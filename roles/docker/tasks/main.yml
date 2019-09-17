@@ -1,0 +1,26 @@
+- name: Add docker repository key
+  apt_key:
+    url: "{{ docker_apt_key_url }}"
+
+- name: Add docker repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+
+- name: Install docker-ce
+  package:
+    name: docker-ce
+
+- name: Enable docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Install python-pip
+  package:
+    name: python-pip
+
+- name: Install docker-compose
+  pip:
+    name: docker-compose
+    state: present
