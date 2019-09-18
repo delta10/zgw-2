@@ -1,24 +1,5 @@
 version: '2'
 services:
-    nginx:
-        image: nginx
-        restart: always
-        ports:
-        - "80:80"
-        - "443:443"
-        volumes:
-        - "/opt/zgw/nginx-default.conf:/etc/nginx/conf.d/default.conf"
-        - "drc-media:/private-media"
-        networks:
-            zgw:
-                aliases:
-                - gemma-zrc.${HOST_SUFFIX}
-                - gemma-ztc.${HOST_SUFFIX}
-                - gemma-drc.${HOST_SUFFIX}
-                - gemma-brc.${HOST_SUFFIX}
-                - gemma-nrc.${HOST_SUFFIX}
-                - gemma-ac.${HOST_SUFFIX}
-                - gemma-zaken-demo.${HOST_SUFFIX}
     postgis:
         image: mdillon/postgis:10
         restart: always
@@ -81,7 +62,7 @@ services:
         - "DB_NAME=gemma-drc"
         - "IS_HTTPS=${IS_HTTPS}"
         volumes:
-        - "drc-media:/app/private-media"
+        - "/opt/zgw/drc-media:/app/private-media"
         depends_on:
         - postgis
         networks:
@@ -175,7 +156,6 @@ services:
 
 volumes:
     postgis:
-    drc-media:
 
 networks:
     zgw:
