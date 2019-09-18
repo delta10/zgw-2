@@ -33,5 +33,5 @@ cd /opt/zgw
 The generation of SSL certificates is handled by Let's Encrypt. Initially bootstrap the configuration with:
 
 ```bash
-sudo certbot --nginx -d example.com -d www.example.com
+sudo certbot --nginx
 ```
