@@ -25,6 +25,6 @@ The playbook creates a `/home/zgw` folder that includes the `docker-compose.yml`
 The components now need to be configured with initial setup:
 
 ```bash
-cd /home/zgw
+cd /opt/zgw
 ./configure.sh
 ```
