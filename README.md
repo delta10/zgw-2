@@ -35,5 +35,5 @@ Before enabling Let's Encrypt, set the `zgw_lock_nginx_configuration` variable t
 The generation of SSL certificates is handled by Let's Encrypt. Initially bootstrap the configuration with:
 
 ```bash
-sudo certbot --nginx
+sudo certbot --nginx --hsts
 ```

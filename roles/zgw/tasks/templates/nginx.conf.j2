@@ -2,6 +2,7 @@ server {
     listen 80;
     listen [::]:80;
     server_name gemma-zrc.{{ zgw_host_suffix }};
+    include snippets/security.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8000;
@@ -16,6 +17,7 @@ server {
     listen 80;
     listen [::]:80;
     server_name gemma-ztc.{{ zgw_host_suffix }};
+    include snippets/security.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8001;
@@ -31,6 +33,7 @@ server {
     listen [::]:80;
     server_name gemma-drc.{{ zgw_host_suffix }};
     client_max_body_size 512M;
+    include snippets/security.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8002;
@@ -50,6 +53,7 @@ server {
     listen 80;
     listen [::]:80;
     server_name gemma-brc.{{ zgw_host_suffix }};
+    include snippets/security.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8003;
@@ -64,6 +68,7 @@ server {
     listen 80;
     listen [::]:80;
     server_name gemma-nrc.{{ zgw_host_suffix }};
+    include snippets/security.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8004;
@@ -78,6 +83,7 @@ server {
     listen 80;
     listen [::]:80;
     server_name gemma-ac.{{ zgw_host_suffix }};
+    include snippets/security.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8005;
@@ -92,6 +98,7 @@ server {
     listen 80;
     listen [::]:80;
     server_name gemma-zaken-demo.{{ zgw_host_suffix }};
+    include snippets/security.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8006;

@@ -12,6 +12,14 @@
   when: not zgw_lock_nginx_configuration
   notify: restart nginx
 
+- name: Create /etc/nginx/snippets/security.conf
+  template:
+    src: templates/security.conf.j2
+    dest: /etc/nginx/snippets/security.conf
+    owner: root
+    mode: 0644
+  notify: restart nginx
+
 - name: Create symlink /etc/nginx/sites-enabled/zgw
   file:
     src: /etc/nginx/sites-available/zgw
