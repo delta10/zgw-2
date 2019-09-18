@@ -9,6 +9,7 @@
     dest: /etc/nginx/sites-available/zgw
     owner: root
     mode: 0644
+  when: not zgw_lock_nginx_configuration
   notify: restart nginx
 
 - name: Create symlink /etc/nginx/sites-enabled/zgw
