@@ -17,3 +17,5 @@ zgw_google_maps_api_key: "AIzaSyDCYXCpV1m_wQoiPbR7E9f5dpa1iWilsjc"
 zgw_is_https: 1
 
 zgw_lock_nginx_configuration: false
+
+alfresco_enable: false
