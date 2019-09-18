@@ -1,44 +1,44 @@
-- name: create /home/zgw folder
+- name: create /opt/zgw folder
   file:
-    path: /home/zgw
+    path: /opt/zgw
     state: directory
 
-- name: Create /home/zgw/nginx-default.conf
+- name: Create /opt/zgw/nginx-default.conf
   template:
     src: templates/nginx-default.conf.j2
-    dest: /home/zgw/nginx-default.conf
+    dest: /opt/zgw/nginx-default.conf
     owner: root
     mode: 0600
   notify: restart zgw
 
-- name: Create /home/zgw/postgis-initdb.sql
+- name: Create /opt/zgw/postgis-initdb.sql
   template:
     src: templates/postgis-initdb.sql.j2
-    dest: /home/zgw/postgis-initdb.sql
+    dest: /opt/zgw/postgis-initdb.sql
     owner: root
     mode: 0644
   notify: restart zgw
 
-- name: Create /home/zgw/docker-compose.yml
+- name: Create /opt/zgw/docker-compose.yml
   template:
     src: templates/docker-compose.yml.j2
-    dest: /home/zgw/docker-compose.yml
+    dest: /opt/zgw/docker-compose.yml
     owner: root
     mode: 0600
   notify: restart zgw
 
-- name: Create /home/zgw/.env
+- name: Create /opt/zgw/.env
   template:
     src: templates/dot-env.j2
-    dest: /home/zgw/.env
+    dest: /opt/zgw/.env
     owner: root
     mode: 0600
   notify: restart zgw
 
-- name: Create /home/zgw/configure.sh
+- name: Create /opt/zgw/configure.sh
   template:
     src: templates/configure.sh.j2
-    dest: /home/zgw/configure.sh
+    dest: /opt/zgw/configure.sh
     owner: root
     mode: 0600
 

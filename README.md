@@ -19,7 +19,7 @@ Now adjust the `ansible/hosts.ini` file and run the playbook:
 ansible-playbook -i inventory/hosts.ini playbook.yml
 ```
 
-The playbook creates a `/home/zgw` folder that includes the `docker-compose.yml` file that spins up all the containers and the nginx loadbalancer. Also a new systemd service is created that spins up the `docker-compose.yml` on system boot.
+The playbook creates a `/opt/zgw` folder that includes the `docker-compose.yml` file that spins up all the containers and the nginx loadbalancer. Also a new systemd service is created that spins up the `docker-compose.yml` on system boot.
 
 ## Configuration
 The components now need to be configured with initial setup:
