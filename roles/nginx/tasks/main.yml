@@ -1,3 +1,11 @@
 - name: Install nginx
   package:
     name: nginx
+
+- name: Do not expose nginx version to the outside world
+  replace:
+    dest: "/etc/nginx/nginx.conf"
+    regexp: "# server_tokens off;"
+    replace: "server_tokens off;"
+  notify:
+    - restart nginx
