@@ -12,6 +12,13 @@
   when: not zgw_lock_nginx_configuration
   notify: restart nginx
 
+- name: Create symlink /etc/nginx/sites-enabled/zgw
+  file:
+    src: /etc/nginx/sites-available/zgw
+    dest: /etc/nginx/sites-enabled/zgw
+    state: link
+  notify: restart nginx
+
 - name: Create /etc/nginx/snippets/security.conf
   template:
     src: templates/security.conf.j2
@@ -20,10 +27,18 @@
     mode: 0644
   notify: restart nginx
 
-- name: Create symlink /etc/nginx/sites-enabled/zgw
+- name: Create /etc/nginx/modules-available/10-disable-server-tokens.conf
+  template:
+    src: templates/10-disable-server-tokens.conf.j2
+    dest: /etc/nginx/modules-available/10-disable-server-tokens.conf
+    owner: root
+    mode: 0644
+  notify: restart nginx
+
+- name: Create symlink /etc/nginx/modules-enabled/10-disable-server-tokens.conf
   file:
-    src: /etc/nginx/sites-available/zgw
-    dest: /etc/nginx/sites-enabled/zgw
+    src: /etc/nginx/modules-available/10-disable-server-tokens.conf
+    dest: /etc/nginx/modules-enabled/10-disable-server-tokens.conf
     state: link
   notify: restart nginx
 
