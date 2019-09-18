@@ -40,7 +40,7 @@
     src: templates/configure.sh.j2
     dest: /home/zgw/configure.sh
     owner: root
-    mode: 0744
+    mode: 0600
 
 - name: Create /etc/systemd/system/zgw.service
   template:
