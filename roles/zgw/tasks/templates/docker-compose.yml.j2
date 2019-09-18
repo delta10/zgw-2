@@ -49,7 +49,7 @@ services:
         - "DB_USER=postgres"
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-zrc"
-        - "IS_HTTPS=0"
+        - "IS_HTTPS=${IS_HTTPS}"
         depends_on:
         - postgis
         networks:
@@ -64,7 +64,7 @@ services:
         - "DB_USER=postgres"
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-ztc"
-        - "IS_HTTPS=0"
+        - "IS_HTTPS=${IS_HTTPS}"
         depends_on:
         - postgis
         networks:
@@ -79,7 +79,7 @@ services:
         - "DB_USER=postgres"
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-drc"
-        - "IS_HTTPS=0"
+        - "IS_HTTPS=${IS_HTTPS}"
         volumes:
         - "drc-media:/app/private-media"
         depends_on:
@@ -96,7 +96,7 @@ services:
         - "DB_USER=postgres"
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-brc"
-        - "IS_HTTPS=0"
+        - "IS_HTTPS=${IS_HTTPS}"
         depends_on:
         - postgis
         networks:
@@ -111,7 +111,7 @@ services:
         - "DB_USER=postgres"
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-nrc"
-        - "IS_HTTPS=0"
+        - "IS_HTTPS=${IS_HTTPS}"
         - "PUBLISH_BROKER_URL=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
         - "CELERY_BROKER_URL=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
         - "CELERY_RESULT_BACKEND=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
@@ -130,7 +130,7 @@ services:
         - "DB_USER=postgres"
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-nrc"
-        - "IS_HTTPS=0"
+        - "IS_HTTPS=${IS_HTTPS}"
         - "PUBLISH_BROKER_URL=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
         - "CELERY_BROKER_URL=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
         - "CELERY_RESULT_BACKEND=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
@@ -150,7 +150,7 @@ services:
         - "DB_USER=postgres"
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-ac"
-        - "IS_HTTPS=0"
+        - "IS_HTTPS=${IS_HTTPS}"
         depends_on:
         - postgis
         networks:
@@ -166,8 +166,7 @@ services:
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-zaken-demo"
         - "REDIS_HOST=redis"
-        - "IS_HTTPS=0"
-        - "DEBUG=True"
+        - "IS_HTTPS=${IS_HTTPS}"
         depends_on:
         - postgis
         - redis

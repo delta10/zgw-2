@@ -1,5 +1,7 @@
-- name: Apply zgw role to all hosts
+- name: Apply roles to all hosts
   hosts: all
   roles:
   - docker
+  - nginx
+  - certbot
   - zgw

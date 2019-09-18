@@ -1,0 +1,6 @@
+- apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: Install python-certbot-nginx
+  package:
+    name: python-certbot-nginx
