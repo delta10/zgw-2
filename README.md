@@ -22,9 +22,16 @@ ansible-playbook -i inventory/hosts.ini playbook.yml
 The playbook creates a `/opt/zgw` folder that includes the `docker-compose.yml` file that spins up all the containers and the nginx loadbalancer. Also a new systemd service is created that spins up the `docker-compose.yml` on system boot.
 
 ## Configuration
-The components now need to be configured with initial setup:
+The components now need to be configured with initial setup (only needs to be run once):
 
 ```bash
 cd /opt/zgw
 ./configure.sh
+```
+
+## Let's encrypt
+The generation of SSL certificates is handled by Let's Encrypt. Initially bootstrap the configuration with:
+
+```bash
+sudo certbot --nginx -d example.com -d www.example.com
 ```
