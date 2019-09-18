@@ -3,13 +3,20 @@
     path: /opt/zgw
     state: directory
 
-- name: Create /opt/zgw/nginx-default.conf
+- name: Create /etc/nginx/sites-available/zgw
   template:
-    src: templates/nginx-default.conf.j2
-    dest: /opt/zgw/nginx-default.conf
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/sites-available/zgw
     owner: root
-    mode: 0600
-  notify: restart zgw
+    mode: 0644
+  notify: restart nginx
+
+- name: Create symlink /etc/nginx/sites-enabled/zgw
+  file:
+    src: /etc/nginx/sites-available/zgw
+    dest: /etc/nginx/sites-enabled/zgw
+    state: link
+  notify: restart nginx
 
 - name: Create /opt/zgw/postgis-initdb.sql
   template:

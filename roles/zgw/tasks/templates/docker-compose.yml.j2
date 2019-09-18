@@ -31,6 +31,8 @@ services:
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-zrc"
         - "IS_HTTPS=${IS_HTTPS}"
+        ports:
+        - "8000:8000"
         depends_on:
         - postgis
         networks:
@@ -46,6 +48,8 @@ services:
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-ztc"
         - "IS_HTTPS=${IS_HTTPS}"
+        ports:
+        - "8001:8000"
         depends_on:
         - postgis
         networks:
@@ -61,6 +65,8 @@ services:
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-drc"
         - "IS_HTTPS=${IS_HTTPS}"
+        ports:
+        - "8002:8000"
         volumes:
         - "/opt/zgw/drc-media:/app/private-media"
         depends_on:
@@ -78,6 +84,8 @@ services:
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-brc"
         - "IS_HTTPS=${IS_HTTPS}"
+        ports:
+        - "8003:8000"
         depends_on:
         - postgis
         networks:
@@ -96,6 +104,8 @@ services:
         - "PUBLISH_BROKER_URL=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
         - "CELERY_BROKER_URL=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
         - "CELERY_RESULT_BACKEND=amqp://guest:${RABBITMQ_PASSWORD}@rabbitmq:5672//"
+        ports:
+        - "8004:8000"
         depends_on:
         - postgis
         - rabbitmq
@@ -132,6 +142,8 @@ services:
         - "DB_PASSWORD=${POSTGIS_PASSWORD}"
         - "DB_NAME=gemma-ac"
         - "IS_HTTPS=${IS_HTTPS}"
+        ports:
+        - "8005:8000"
         depends_on:
         - postgis
         networks:
@@ -148,6 +160,8 @@ services:
         - "DB_NAME=gemma-zaken-demo"
         - "REDIS_HOST=redis"
         - "IS_HTTPS=${IS_HTTPS}"
+        ports:
+        - "8006:8000"
         depends_on:
         - postgis
         - redis

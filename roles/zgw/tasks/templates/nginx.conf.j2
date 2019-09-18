@@ -1,19 +1,9 @@
 server {
-    listen 80 default_server;
-    server_name _;
-
-    location / {
-        root   /usr/share/nginx/html;
-        index  index.html index.htm;
-    }
-}
-
-server {
     listen 80;
     server_name gemma-zrc.{{ zgw_host_suffix }};
 
     location / {
-        proxy_pass http://gemma-zrc:8000;
+        proxy_pass http://127.0.0.1:8000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -26,7 +16,7 @@ server {
     server_name gemma-ztc.{{ zgw_host_suffix }};
 
     location / {
-        proxy_pass http://gemma-ztc:8000;
+        proxy_pass http://127.0.0.1:8001;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -40,7 +30,7 @@ server {
     client_max_body_size 512M;
 
     location / {
-        proxy_pass http://gemma-drc:8000;
+        proxy_pass http://127.0.0.1:8002;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -58,7 +48,7 @@ server {
     server_name gemma-brc.{{ zgw_host_suffix }};
 
     location / {
-        proxy_pass http://gemma-brc:8000;
+        proxy_pass http://127.0.0.1:8003;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -71,7 +61,7 @@ server {
     server_name gemma-nrc.{{ zgw_host_suffix }};
 
     location / {
-        proxy_pass http://gemma-nrc:8000;
+        proxy_pass http://127.0.0.1:8004;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -84,7 +74,7 @@ server {
     server_name gemma-ac.{{ zgw_host_suffix }};
 
     location / {
-        proxy_pass http://gemma-ac:8000;
+        proxy_pass http://127.0.0.1:8005;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -97,7 +87,7 @@ server {
     server_name gemma-zaken-demo.{{ zgw_host_suffix }};
 
     location / {
-        proxy_pass http://gemma-zaken-demo:8000;
+        proxy_pass http://127.0.0.1:8006;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -105,7 +95,7 @@ server {
     }
 
     location /ws {
-        proxy_pass http://gemma-zaken-demo:8000;
+        proxy_pass http://127.0.0.1:8006;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
