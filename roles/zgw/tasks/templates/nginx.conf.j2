@@ -54,7 +54,7 @@ server {
 
     server_name gemma-drc.{{ zgw_host_suffix }};
     client_max_body_size 512M;
-    include snippets/zgw-security-headers.conf;;
+    include snippets/zgw-security-headers.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8002;
@@ -81,7 +81,7 @@ server {
     {% endif %}
 
     server_name gemma-brc.{{ zgw_host_suffix }};
-    include snippets/zgw-security-headers.conf;;
+    include snippets/zgw-security-headers.conf;
 
     location / {
         proxy_pass http://127.0.0.1:8003;
@@ -182,7 +182,7 @@ server {
                     gemma-ac.{{ zgw_host_suffix }}
                     gemma-zaken-demo.{{ zgw_host_suffix }};
 
-        include snippets/security.conf;
+        include snippets/zgw-security-headers.conf;
 
         return 301 https://$host$request_uri;
     }
