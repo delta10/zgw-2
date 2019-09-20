@@ -35,7 +35,7 @@
     mode: 0644
   notify: restart nginx
 
-  - name: Create /opt/zgw/postgis-initdb.sql
+- name: Create /opt/zgw/postgis-initdb.sql
   template:
     src: templates/postgis-initdb.sql.j2
     dest: /opt/zgw/postgis-initdb.sql
