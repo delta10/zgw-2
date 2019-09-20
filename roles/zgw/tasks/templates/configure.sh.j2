@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# {{ ansible_managed }}
+#
+
 read -p "Are you sure you want to configure your ZGW components? (only run this command once) <y/N> " prompt
 if [[ $prompt != "y" && $prompt != "Y" && $prompt != "yes" && $prompt != "Yes" ]]
 then

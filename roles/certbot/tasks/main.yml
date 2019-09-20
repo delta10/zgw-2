@@ -1,3 +1,4 @@
+---
 - apt_repository:
     repo: ppa:certbot/certbot
 

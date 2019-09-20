@@ -1,3 +1,4 @@
+---
 - name: create /opt/alfresco folder
   file:
     path: /opt/alfresco

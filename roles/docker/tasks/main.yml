@@ -1,3 +1,4 @@
+---
 - name: Add docker repository key
   apt_key:
     url: "{{ docker_apt_key_url }}"
