@@ -19,15 +19,23 @@
     state: link
   notify: restart nginx
 
-- name: Create /etc/nginx/snippets/security.conf
+- name: Create /etc/nginx/snippets/zgw-security-headers.conf
   template:
-    src: templates/security.conf.j2
-    dest: /etc/nginx/snippets/security.conf
+    src: templates/zgw-security-headers.conf.j2
+    dest: /etc/nginx/snippets/zgw-security-headers.conf
     owner: root
     mode: 0644
   notify: restart nginx
 
-- name: Create /opt/zgw/postgis-initdb.sql
+- name: Create /etc/nginx/snippets/zgw-ssl.conf
+  template:
+    src: templates/zgw-ssl.conf.j2
+    dest: /etc/nginx/snippets/zgw-ssl.conf
+    owner: root
+    mode: 0644
+  notify: restart nginx
+
+  - name: Create /opt/zgw/postgis-initdb.sql
   template:
     src: templates/postgis-initdb.sql.j2
     dest: /opt/zgw/postgis-initdb.sql

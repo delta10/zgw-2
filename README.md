@@ -30,10 +30,17 @@ cd /opt/zgw
 ```
 
 ## Let's encrypt
-Before enabling Let's Encrypt, set the `zgw_lock_nginx_configuration` variable to true in `inventory/group_vars/all/all.yml`. This makes sure Ansible does not overwrite the nginx configuration any more as certbot is adding extra configuration parameters to the configuration file.
-
-The generation of SSL certificates is handled by Let's Encrypt. Initially bootstrap the configuration with:
+The generation of SSL certificates is handled by Let's Encrypt. Bootstrap the configuration with:
 
 ```bash
-sudo certbot --nginx --hsts
+sudo certbot certonly --webroot -w /var/www/html \
+    -d gemma-zrc.my-domain.dev \
+    -d gemma-ztc.my-domain.dev \
+    -d gemma-drc.my-domain.dev \
+    -d gemma-brc.my-domain.dev \
+    -d gemma-nrc.my-domain.dev \
+    -d gemma-ac.my-domain.dev \
+    -d gemma-zaken-demo.my-domain.dev
 ```
+
+And change the `zgw_ssl_enabled`, `zgw_ssl_certificate`, `zgw_ssl_certificate_key` and `zgw_ssl_dhparam` parameters in the inventory accordingly.

@@ -1,0 +1,24 @@
+# ZGW
+zgw_version: 1.0.0-rc1
+zgw_host_suffix: zgw.test
+
+zgw_ssl_enabled: true
+zgw_ssl_certificate: /etc/letsencrypt/live/my-domain/fullchain.pem
+zgw_ssl_certificate_key: /etc/letsencrypt/live/my-domain/privkey.pem
+zgw_ssl_ocsp_certificates: /etc/letsencrypt/live/my-domain/chain.pem
+zgw_ssl_dhparam: /etc/letsencrypt/ssl-dhparams.pem
+
+zgw_postgis_password: postgis1
+zgw_rabbitmq_password: guest1
+
+zgw_client_secret: gemma123
+
+zgw_secret_key: pleasechangemetosomethingsecret
+
+zgw_admin_username: admin
+zgw_admin_email: admin@admin.com
+
+zgw_google_maps_api_key: "AIzaSyDCYXCpV1m_wQoiPbR7E9f5dpa1iWilsjc"
+
+# Alfresco
+alfresco_enable: false
