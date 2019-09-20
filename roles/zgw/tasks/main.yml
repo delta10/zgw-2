@@ -27,16 +27,19 @@
   notify: restart nginx
 
 - name: Retrieve SSL config from ssl-config.mozilla.org
-  get_url:
+  uri:
     url: https://ssl-config.mozilla.org/guidelines/latest.json
-    dest: "/etc/nginx/ssl-config.json"
-
-- name: Read SSL config
-  command: cat /etc/nginx/ssl-config.json
+    method: GET
+    return_content: yes
+    status_code: 200
   register: result
 
-- set_fact:
-    ssl_config: "{{ result.stdout | from_json }}"
+- name: Parse SSL config
+  set_fact:
+    ssl_config: "{{ result.content | from_json }}"
+
+- debug:
+    msg: Retrieved SSL config version {{ ssl_config.version }}
 
 - name: Create /etc/nginx/snippets/zgw-ssl.conf
   template:
