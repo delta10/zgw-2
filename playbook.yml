@@ -9,5 +9,5 @@
 - name: Apply alfreso to all hosts when alfresco is enabled
   hosts: all
   roles:
-  - alfresco
-  when: alfresco_enable
+  - role: alfresco
+    when: alfresco_enable
