@@ -13,7 +13,15 @@ sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 ```
 
-Now adjust the `ansible/hosts.ini` file and run the playbook:
+Now adjust the `ansible/hosts.ini` file to your local settings. Then copy the example ini:
+
+```bash
+sudo cp inventory/group_vars/example/all.yml inventory/group_vars/all/all.yml
+```
+
+and adjust the settings in `inventory/group_vars/all/all.yml` to your local configuration.
+
+Now run the playbook:
 
 ```bash
 ansible-playbook -i inventory/hosts.ini playbook.yml
