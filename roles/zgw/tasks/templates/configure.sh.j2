@@ -26,7 +26,7 @@ do
 
     if [ $service != "zaken-demo" ]
     then
-        docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.authorizations.models import AuthorizationsConfig; AuthorizationsConfig.objects.update_or_create(id=1, defaults={\"api_root\": \"http{% if zgw_is_https %}s{%endif %}://gemma-ac.{{ zgw_host_suffix }}/api/v1/\", \"component\": \"$service\"})' | python src/manage.py shell"
+        docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.authorizations.models import AuthorizationsConfig; AuthorizationsConfig.objects.update_or_create(id=1, defaults={\"api_root\": \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-ac.{{ zgw_host_suffix }}/api/v1/\", \"component\": \"$service\"})' | python src/manage.py shell"
     fi
 done
 
@@ -42,7 +42,7 @@ do
     do
         if [ $service != $to_service ]
         then
-            docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.models import APICredential; APICredential.objects.update_or_create(id=$i, defaults={\"api_root\": \"http{% if zgw_is_https %}s{%endif %}://gemma-$to_service.{{ zgw_host_suffix }}/api/v1/\", \"label\": \"gemma-$to_service\", \"client_id\": \"gemma\", \"secret\": \"{{ zgw_client_secret }}\", \"user_id\": \"gemma\", \"user_representation\": \"gemma\"})' | python src/manage.py shell"
+            docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.models import APICredential; APICredential.objects.update_or_create(id=$i, defaults={\"api_root\": \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-$to_service.{{ zgw_host_suffix }}/api/v1/\", \"label\": \"gemma-$to_service\", \"client_id\": \"gemma\", \"secret\": \"{{ zgw_client_secret }}\", \"user_id\": \"gemma\", \"user_representation\": \"gemma\"})' | python src/manage.py shell"
             ((i++))
         fi
     done
@@ -52,11 +52,11 @@ echo "Configure notification service on all the services"
 for service in zrc ztc drc brc nrc ac
 do
     echo "gemma-$service"
-    docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.notifications.models import NotificationsConfig; NotificationsConfig.objects.update_or_create(id=1, defaults={\"api_root\": \"http{% if zgw_is_https %}s{%endif %}://gemma-nrc.{{ zgw_host_suffix }}/api/v1/\"})' | python src/manage.py shell"
+    docker-compose exec gemma-$service sh -c "echo 'from vng_api_common.notifications.models import NotificationsConfig; NotificationsConfig.objects.update_or_create(id=1, defaults={\"api_root\": \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-nrc.{{ zgw_host_suffix }}/api/v1/\"})' | python src/manage.py shell"
 done
 
 echo "Add some configuration to the demo application"
-docker-compose exec gemma-zaken-demo sh -c "echo 'from zac.demo.models import SiteConfiguration; config = SiteConfiguration.objects.first(); config.global_api_client_id = \"gemma\"; config.global_api_secret = \"{{ zgw_client_secret }}\"; config.google_maps_api_key = \"{{ zgw_google_maps_api_key }}\"; config.ztc_catalogus_uuid = \"f7afd156-c8f5-4666-b8b5-28a4a9b5dfc7\"; config.zrc_base_url = \"http{% if zgw_is_https %}s{%endif %}://gemma-zrc.{{ zgw_host_suffix }}/api/v1/\"; config.drc_base_url = \"http{% if zgw_is_https %}s{%endif %}://gemma-drc.{{ zgw_host_suffix }}/api/v1/\"; config.ztc_base_url = \"http{% if zgw_is_https %}s{%endif %}://gemma-ztc.{{ zgw_host_suffix }}/api/v1/\"; config.brc_base_url = \"http{% if zgw_is_https %}s{%endif %}://gemma-brc.{{ zgw_host_suffix }}/api/v1/\"; config.nc_base_url = \"http{% if zgw_is_https %}s{%endif %}://gemma-nrc.{{ zgw_host_suffix }}/api/v1/\"; config.ztc_mor_zaaktype_uuid = \"0119dd4e-7be9-477e-bccf-75023b1453c1\"; config.ztc_mor_statustype_new_uuid = \"e53becac-cb4f-4dc7-911b-7d2ca066c041\"; config.ztc_mor_informatieobjecttype_image_uuid = \"63a58060-8cd1-4c9d-bcc4-b6954353e758\"; config.save()' | python src/manage.py shell"
+docker-compose exec gemma-zaken-demo sh -c "echo 'from zac.demo.models import SiteConfiguration; config = SiteConfiguration.objects.first(); config.global_api_client_id = \"gemma\"; config.global_api_secret = \"{{ zgw_client_secret }}\"; config.google_maps_api_key = \"{{ zgw_google_maps_api_key }}\"; config.ztc_catalogus_uuid = \"f7afd156-c8f5-4666-b8b5-28a4a9b5dfc7\"; config.zrc_base_url = \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-zrc.{{ zgw_host_suffix }}/api/v1/\"; config.drc_base_url = \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-drc.{{ zgw_host_suffix }}/api/v1/\"; config.ztc_base_url = \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-ztc.{{ zgw_host_suffix }}/api/v1/\"; config.brc_base_url = \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-brc.{{ zgw_host_suffix }}/api/v1/\"; config.nc_base_url = \"http{% if zgw_ssl_enabled %}s{%endif %}://gemma-nrc.{{ zgw_host_suffix }}/api/v1/\"; config.ztc_mor_zaaktype_uuid = \"0119dd4e-7be9-477e-bccf-75023b1453c1\"; config.ztc_mor_statustype_new_uuid = \"e53becac-cb4f-4dc7-911b-7d2ca066c041\"; config.ztc_mor_informatieobjecttype_image_uuid = \"63a58060-8cd1-4c9d-bcc4-b6954353e758\"; config.save()' | python src/manage.py shell"
 
 echo "Load some demo-data for gemma-ztc"
 docker-compose exec gemma-ztc sh -c "wget https://catalogi-api.vng.cloud/data/fixture/ -O /tmp/fixture.json && python /app/src/manage.py loaddata /tmp/fixture.json && rm /tmp/fixture.json"
