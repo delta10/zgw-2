@@ -4,3 +4,9 @@
 - name: Install python-certbot-nginx
   package:
     name: python-certbot-nginx
+
+- name: Create /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
+  template:
+    src: templates/01-reload-nginx.j2
+    dest: /etc/letsencrypt/renewal-hooks/deploy/01-reload-nginx
+    mode: 0755
