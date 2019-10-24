@@ -22,7 +22,7 @@ services:
         networks:
         - zgw
     gemma-zrc:
-        image: vngr/gemma-zrc:${GEMMA_VERSION}
+        image: vngr/gemma-zrc:${GEMMA_ZRC_VERSION}
         restart: always
         environment:
         - "DJANGO_SETTINGS_MODULE=zrc.conf.docker"
@@ -39,7 +39,7 @@ services:
         networks:
         - zgw
     gemma-ztc:
-        image: vngr/gemma-ztc:${GEMMA_VERSION}
+        image: vngr/gemma-ztc:${GEMMA_ZTC_VERSION}
         restart: always
         environment:
         - "DJANGO_SETTINGS_MODULE=ztc.conf.docker"
@@ -56,7 +56,7 @@ services:
         networks:
         - zgw
     gemma-drc:
-        image: vngr/gemma-drc:${GEMMA_VERSION}
+        image: vngr/gemma-drc:${GEMMA_DRC_VERSION}
         restart: always
         environment:
         - "DJANGO_SETTINGS_MODULE=drc.conf.docker"
@@ -75,7 +75,7 @@ services:
         networks:
         - zgw
     gemma-brc:
-        image: vngr/gemma-brc:${GEMMA_VERSION}
+        image: vngr/gemma-brc:${GEMMA_BRC_VERSION}
         restart: always
         environment:
         - "DJANGO_SETTINGS_MODULE=brc.conf.docker"
@@ -92,7 +92,7 @@ services:
         networks:
         - zgw
     gemma-nrc:
-        image: vngr/gemma-notifications:${GEMMA_VERSION}
+        image: vngr/gemma-notifications:${GEMMA_NRC_VERSION}
         restart: always
         environment:
         - "DJANGO_SETTINGS_MODULE=nrc.conf.docker"
@@ -113,7 +113,7 @@ services:
         networks:
         - zgw
     gemma-nrc-worker:
-        image: vngr/gemma-notifications:${GEMMA_VERSION}
+        image: vngr/gemma-notifications:${GEMMA_NRC_VERSION}
         restart: always
         environment:
         - "DJANGO_SETTINGS_MODULE=nrc.conf.docker"
@@ -133,7 +133,7 @@ services:
         networks:
         - zgw
     gemma-ac:
-        image: vngr/gemma-autorisatiecomponent:${GEMMA_VERSION}
+        image: vngr/gemma-autorisatiecomponent:${GEMMA_AC_VERSION}
         restart: always
         environment:
         - "DJANGO_SETTINGS_MODULE=ac.conf.docker"

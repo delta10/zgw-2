@@ -1,5 +1,11 @@
 # ZGW
-zgw_version: 1.0.0-rc1
+zgw_zrc_version: 1.0.0-rc1
+zgw_ztc_version: 1.0.0-rc1
+zgw_drc_version: 1.0.0-rc1
+zgw_brc_version: 1.0.0-rc1
+zgw_nrc_version: 1.0.0-rc1
+zgw_ac_version: 1.0.0-rc1
+
 zgw_host_suffix: zgw.test
 
 zgw_ssl_enabled: true
