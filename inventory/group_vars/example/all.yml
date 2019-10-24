@@ -19,6 +19,3 @@ zgw_admin_username: admin
 zgw_admin_email: admin@admin.com
 
 zgw_google_maps_api_key: "AIzaSyDCYXCpV1m_wQoiPbR7E9f5dpa1iWilsjc"
-
-# Alfresco
-alfresco_enable: false

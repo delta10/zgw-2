@@ -1,5 +1,0 @@
----
-- name: restart alfresco
-  systemd:
-    name: alfresco
-    state: restarted
