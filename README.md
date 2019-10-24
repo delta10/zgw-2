@@ -49,6 +49,7 @@ sudo certbot certonly --webroot -w /var/www/html \
     -d gemma-nrc.my-domain.dev \
     -d gemma-ac.my-domain.dev \
     -d gemma-zaken-demo.my-domain.dev
+sudo openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048
 ```
 
 And change the `zgw_ssl_enabled`, `zgw_ssl_certificate`, `zgw_ssl_certificate_key` and `zgw_ssl_dhparam` parameters in the inventory accordingly.
